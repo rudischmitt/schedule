@@ -69,6 +69,3 @@ If you encounter issues running the script directly, ensure that Python 3 is ins
 
 ## Author
 [Rudolf Schmitt]
-
-## Basic Example
- ```./schedule.py
