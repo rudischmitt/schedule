@@ -48,6 +48,7 @@ You can customize the output by providing command line arguments.
 - `--EndingTime`, `-et`: Specify the ending time in `HH:MM` format (default: `17:00` or 5:00 PM).
 - `--CondensedOutput`, `-co`: Output without spaces between times (default). Example: `09:00-10:00`.
 - `--SpacedOutput`, `-so`: Output with spaces between times. Example: `09:00 - 10:00`.
+- `--ShowAMPM`, `-ampm`: Include AM/PM labels in the 12-hour format (default: AM/PM labels are omitted).
 
 #### Example with Custom Options:
 ```bash
