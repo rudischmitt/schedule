@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import argparse
 from datetime import datetime, timedelta
 
@@ -15,14 +17,17 @@ def parse_slot_length(slot_length):
     return timedelta(hours=hours, minutes=minutes)
 
 # Helper function to format time
-def format_time(dt, format_12):
+def format_time(dt, format_12, show_ampm):
     if format_12:
-        return dt.strftime("%I:%M %p")
+        if show_ampm:
+            return dt.strftime("%I:%M %p")  # Include AM/PM
+        else:
+            return dt.strftime("%I:%M")     # Exclude AM/PM
     else:
         return dt.strftime("%H:%M")
 
 # Main function to generate the schedule
-def generate_schedule(start_time, slot_length, end_time, format_12, condensed_output):
+def generate_schedule(start_time, slot_length, end_time, format_12, condensed_output, show_ampm):
     start = datetime.strptime(start_time, "%H:%M")
     end = datetime.strptime(end_time, "%H:%M")
     slot_delta = parse_slot_length(slot_length)
@@ -34,9 +39,9 @@ def generate_schedule(start_time, slot_length, end_time, format_12, condensed_ou
     while current_time + slot_delta <= end:
         end_slot_time = current_time + slot_delta
         if condensed_output:
-            schedule.append(f"{format_time(current_time, format_12)}-{format_time(end_slot_time, format_12)}")
+            schedule.append(f"{format_time(current_time, format_12, show_ampm)}-{format_time(end_slot_time, format_12, show_ampm)}")
         else:
-            schedule.append(f"{format_time(current_time, format_12)} - {format_time(end_slot_time, format_12)}")
+            schedule.append(f"{format_time(current_time, format_12, show_ampm)} - {format_time(end_slot_time, format_12, show_ampm)}")
         current_time = end_slot_time
     
     return schedule
@@ -62,6 +67,9 @@ def main():
     parser.add_argument('--CondensedOutput', '-co', action='store_true', help="Use condensed output format (e.g., 09:00-09:15). This is the default.")
     parser.add_argument('--SpacedOutput', '-so', action='store_true', help="Use spaced output format (e.g., 09:00 - 09:15).")
     
+    # Argument for showing AM/PM labels in 12-hour clock
+    parser.add_argument('--ShowAMPM', '-ampm', action='store_true', help="Show AM/PM labels in 12-hour format (default: no AM/PM).")
+    
     args = parser.parse_args()
     
     # Determine clock format (default to 12-hour)
@@ -70,12 +78,15 @@ def main():
     # Determine if condensed or spaced output is used (default is condensed)
     condensed_output = not args.SpacedOutput
     
+    # Determine if AM/PM should be shown (default is false)
+    show_ampm = args.ShowAMPM
+    
     start_time = args.StartingTime
     slot_length = args.SlotLength
     end_time = args.EndingTime
     
     # Generate the schedule
-    schedule = generate_schedule(start_time, slot_length, end_time, format_12, condensed_output)
+    schedule = generate_schedule(start_time, slot_length, end_time, format_12, condensed_output, show_ampm)
     
     # Output the schedule
     for slot in schedule:
