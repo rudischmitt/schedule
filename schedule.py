@@ -3,6 +3,7 @@
 import argparse
 from datetime import datetime, timedelta
 
+
 # Helper function to parse slot length
 def parse_slot_length(slot_length):
     hours = 0
@@ -14,6 +15,10 @@ def parse_slot_length(slot_length):
             minutes = int(remaining.replace('m', ''))
     elif 'm' in slot_length:
         minutes = int(slot_length.replace('m', ''))
+    else:
+        # If no unit is specified, assume it's in minutes
+        minutes = int(slot_length)
+    
     return timedelta(hours=hours, minutes=minutes)
 
 # Helper function to format time

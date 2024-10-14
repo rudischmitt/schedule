@@ -44,7 +44,7 @@ You can customize the output by providing command line arguments.
 - `--12`, `-12`: Use the 12-hour clock format (default).
 - `--24`, `-24`: Use the 24-hour clock format.
 - `--StartingTime`, `-st`: Specify the starting time in `HH:MM` format (default: `09:00` AM).
-- `--SlotLength`, `-sl`: Specify the slot length in `hours` and/or `minutes` (default: `1h`). Examples: `15m`, `1h`, `1h15m`.
+- `--SlotLength`, `-sl`: Specify the slot length in `hours` and/or `minutes` (default: `1h`). Examples: `15m`, `1h`, `1h15m`. If only a number is given without an hour or minute label, assume minutes as unit. 
 - `--EndingTime`, `-et`: Specify the ending time in `HH:MM` format (default: `17:00` or 5:00 PM).
 - `--CondensedOutput`, `-co`: Output without spaces between times (default). Example: `09:00-10:00`.
 - `--SpacedOutput`, `-so`: Output with spaces between times. Example: `09:00 - 10:00`.
