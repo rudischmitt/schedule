@@ -2,7 +2,7 @@
 
 import argparse
 from datetime import datetime, timedelta
-
+import unittest
 
 # Helper function to parse slot length
 def parse_slot_length(slot_length):
@@ -50,6 +50,34 @@ def generate_schedule(start_time, slot_length, end_time, format_12, condensed_ou
         current_time = end_slot_time
     
     return schedule
+
+
+# Test Cases
+class TestScheduleScript(unittest.TestCase):
+    
+    def test_parse_slot_length_minutes(self):
+        self.assertEqual(parse_slot_length("10"), timedelta(minutes=10))
+        self.assertEqual(parse_slot_length("15m"), timedelta(minutes=15))
+
+    def test_parse_slot_length_hours(self):
+        self.assertEqual(parse_slot_length("1h"), timedelta(hours=1))
+        self.assertEqual(parse_slot_length("1h15m"), timedelta(hours=1, minutes=15))
+
+    def test_generate_schedule_condensed(self):
+        schedule = generate_schedule("09:00", "1h", "12:00", format_12=True, condensed_output=True, show_ampm=False)
+        expected = ["09:00-10:00", "10:00-11:00", "11:00-12:00"]
+        self.assertEqual(schedule, expected)
+
+    def test_generate_schedule_spaced_with_ampm(self):
+        schedule = generate_schedule("09:00", "1h", "12:00", format_12=True, condensed_output=False, show_ampm=True)
+        expected = ["09:00 AM - 10:00 AM", "10:00 AM - 11:00 AM", "11:00 AM - 12:00 PM"]
+        self.assertEqual(schedule, expected)
+
+    def test_generate_schedule_24_hour(self):
+        schedule = generate_schedule("09:00", "1h", "12:00", format_12=False, condensed_output=True, show_ampm=False)
+        expected = ["09:00-10:00", "10:00-11:00", "11:00-12:00"]
+        self.assertEqual(schedule, expected)
+
 
 # Command line argument parser
 def main():

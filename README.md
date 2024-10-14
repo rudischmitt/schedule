@@ -67,6 +67,10 @@ This will generate:
 ## Troubleshooting
 If you encounter issues running the script directly, ensure that Python 3 is installed and that the script has the proper executable permissions (`chmod +x schedule.py`). If you're on Windows, you may need to run the script with `python schedule.py` instead of `./schedule.py`.
 
+## Unit Tests
+To run tests, use: python -m unittest schedule.py
+
+Could always benefit from more test cases :).
 
 ## Author
 [Rudolf Schmitt]
